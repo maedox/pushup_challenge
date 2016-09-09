@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OFC Pushup Challenge</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript">
+        function pushUps() {
+            var one_day = 60 * 60 * 24 * 1000;  // one day in ms
+            var now = new Date().getTime();
+            var day = 0;
+            var pushUpsNumber = 0;
+            var total = 0;
+
+            // First day of challenge
+            var first_day = new Date(2016, 8, 12, 0, 0, 0, 0).getTime();
+
+            // First day of super hardcore
+            var first_day_hardcore = new Date(2016, 11, 21, 0, 0, 0, 0).getTime();
+
+            // Last day of challenge
+            var last_day = new Date(2017, 0, 18, 0, 0, 0, 0).getTime();
+
+            if (now >= first_day && now <= last_day) {
+                day = Math.round((now - first_day) / one_day) + 1;
+                console.log("day: " + day);
+                if (day > 100) {
+                    pushUpsNumber = 100;
+                }
+                else {
+                    pushUpsNumber = day;
+                }
+                console.log("pushUpsNumber: " + pushUpsNumber);
+
+                if (now >= first_day_hardcore) {
+                    document.getElementById('hardcore').style.display = "block";
+                }
+
+                document.getElementById('pushups').innerHTML = "Dagens pushups: " + pushUpsNumber;
+            }
+            else if (now > last_day) {
+                document.getElementById('pushups').innerHTML = "Utfordringen er over"
+            }
+            else {
+                document.getElementById('pushups').innerHTML = "Utfordringen har ikke startet enda"
+            }
+
+            // Calculate total pushups to date
+            if (day <= 100) {
+                var p_array = Array.apply(1, {length: day + 1}).map(Number.call, Number);
+                total = p_array.reduce((a, b) => a + b, 0);
+            }
+            else if (day > 100) {
+                var p_array = Array.apply(1, {length: 101}).map(Number.call, Number);
+                total = p_array.reduce((a, b) => a + b, 0);
+                total += ((day - 100) * 100);
+            }
+            console.log("Dag: " + day);
+            console.log("Total: " + total);
+
+            if (total > 0) {
+                document.getElementById('total').innerHTML = "Sum, inkludert dagens: " + total;
+            }
+            setTimeout('pushUps()', 60000);
+        }
+    </script>
+</head>
+<body onload="pushUps();">
+    <div class="container text-center">
+        <div class="jumbotron">
+            <h2>OFC Pushup Challenge</h2>
+            <br/>
+            <h3 id="pushups"></h3>
+            <h5 class="text-muted" id="total"></h5>
+            <br/>
+            <h3 id="hardcore" style="font-weight: bold; display: none;">Super hardcore!</h3>
+        </div>
+        <div>
+            <img title="Mer info" src="info.png" />
+        </div>
+        <p class="text-muted">
+            <a title="Kode" href="https://github.com/maedox/pushup_challenge" target="_blank">Kode</a>
+        </p>
+    </div>
+</body>
+</html>
