@@ -22,30 +22,28 @@
             var first_day_hardcore = new Date(2016, 11, 21, 0, 0, 0, 0).getTime();
 
             // Last day of challenge
-            var last_day = new Date(2017, 0, 18, 0, 0, 0, 0).getTime();
+            var last_day = new Date(2017, 0, 19, 0, 0, 0, 0).getTime();
 
-            if (now >= first_day && now <= last_day) {
+            if (now < first_day) {
+                document.getElementById('pushups').innerHTML = "Utfordringen har ikke startet enda"
+            }
+            else if (now > last_day) {
+                document.getElementById('pushups').innerHTML = "Utfordringen er over"
+            }
+            else {
                 day = Math.floor((now - first_day) / one_day) + 1;
-                console.log("day: " + day);
                 if (day > 100) {
                     pushUpsNumber = 100;
                 }
                 else {
                     pushUpsNumber = day;
                 }
-                console.log("pushUpsNumber: " + pushUpsNumber);
 
                 if (now >= first_day_hardcore) {
                     document.getElementById('hardcore').style.display = "block";
                 }
 
                 document.getElementById('pushups').innerHTML = "Dagens pushups: " + pushUpsNumber;
-            }
-            else if (now > last_day) {
-                document.getElementById('pushups').innerHTML = "Utfordringen er over"
-            }
-            else {
-                document.getElementById('pushups').innerHTML = "Utfordringen har ikke startet enda"
             }
 
             // Calculate total pushups to date
@@ -58,8 +56,6 @@
                 total = p_array.reduce((a, b) => a + b, 0);
                 total += ((day - 100) * 100);
             }
-            console.log("Dag: " + day);
-            console.log("Total: " + total);
 
             if (total > 0) {
                 document.getElementById('total').innerHTML = "Sum, inkludert dagens: " + total;
