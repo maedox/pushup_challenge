@@ -25,7 +25,7 @@
             var last_day = new Date(2017, 0, 18, 0, 0, 0, 0).getTime();
 
             if (now >= first_day && now <= last_day) {
-                day = Math.round((now - first_day) / one_day) + 1;
+                day = Math.floor((now - first_day) / one_day) + 1;
                 console.log("day: " + day);
                 if (day > 100) {
                     pushUpsNumber = 100;
